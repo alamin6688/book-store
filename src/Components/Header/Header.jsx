@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <div>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-100 mt-4 mb-12">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -25,51 +25,42 @@ const Header = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Item 1</a>
+              <a className="border-2 border-green-400 text-green-400 font-bold hover:bg-green-500 hover:text-white"><button>Home</button></a>
               </li>
               <li>
-                <a>Parent</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
+                <a>Listed Books</a>
               </li>
               <li>
-                <a>Item 3</a>
+                <a>Pages to Read</a>
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="btn btn-ghost text-xl font-bold">
+            Book Store
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Item 1</a>
+              <a className="border-2 border-green-400 text-green-400 font-bold hover:bg-green-500 hover:text-white">
+                <button>Home</button>
+              </a>
             </li>
             <li>
-              <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </details>
+              <a>Listed Books</a>
             </li>
             <li>
-              <a>Item 3</a>
-            </li>
+                <a>Pages to Read</a>
+              </li>
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <a className="btn bg-green-400 mr-3 text-white hover:bg-green-600">
+            Sign In
+          </a>
+          <a className="btn bg-blue-400 text-white hover:bg-blue-600">
+            Sign Up
+          </a>
         </div>
       </div>
     </div>
