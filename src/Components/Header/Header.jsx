@@ -3,14 +3,20 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   const links = (
     <>
-      <li>
-          <NavLink to="/">Home</NavLink>
+      <li className="text-[18px]">
+          <NavLink to="/">
+          Home
+          </NavLink>
       </li>
-      <li>
-        <NavLink to="/listedBooks">Listed Books</NavLink>
+      <li className="text-[18px]">
+        <NavLink to="/listedBooks">
+          Listed Books
+        </NavLink>
       </li>
-      <li>
-        <NavLink to="/pagesToRead">Pages to Read</NavLink>
+      <li className="text-[18px]">
+        <NavLink to="/pagesToRead">
+          Pages to Read
+        </NavLink>
       </li>
     </>
   );
@@ -43,7 +49,7 @@ const Header = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl font-bold">Book Store</a>
+          <a className="btn btn-ghost text-2xl pl-0 md:text-3xl font-bold">Book Store</a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
