@@ -1,11 +1,12 @@
 import { FaLocationDot } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
 import { IoBookSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 
 const ListedBook = ({books}) => {
 
-    const {bookName, author, image, totalPages, category, rating, tags, publisher, yearOfPublishing} = books;
+    const {bookId, bookName, author, image, totalPages, category, rating, tags, publisher, yearOfPublishing} = books;
 
     return (
         <div>

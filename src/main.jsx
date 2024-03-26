@@ -10,7 +10,8 @@ import Home from './Components/Home/Home';
 import ListedBooks from './Components/ListedBooks/ListedBooks';
 import PagesToRead from './Components/PagesToRead/PagesToRead';
 import ErrorPage from './Components/ErrorPage/ErrorPage';
-
+import { useLoaderData, useParams } from "react-router-dom";
+import BookDetails from './Components/BookDetails/BookDetails';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
       {
         path: '/pagesToRead',
         element: <PagesToRead></PagesToRead>,
+      },
+      {
+        path: "/details/:bookId",
+        element: <BookDetails></BookDetails>,
+        loader: ()=>fetch('../books.json'),
       },
     ]
   },
