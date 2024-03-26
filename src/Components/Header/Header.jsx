@@ -1,4 +1,20 @@
+import { NavLink } from "react-router-dom";
+
 const Header = () => {
+  const links = (
+    <>
+      <li>
+          <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/listedBooks">Listed Books</NavLink>
+      </li>
+      <li>
+        <NavLink to="/pagesToRead">Pages to Read</NavLink>
+      </li>
+    </>
+  );
+
   return (
     <div>
       <div className="navbar bg-base-100 mt-4 mb-12">
@@ -24,35 +40,13 @@ const Header = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-              <a className="border-2 border-green-400 text-green-400 font-bold hover:bg-green-500 hover:text-white"><button>Home</button></a>
-              </li>
-              <li>
-                <a>Listed Books</a>
-              </li>
-              <li>
-                <a>Pages to Read</a>
-              </li>
+              {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl font-bold">
-            Book Store
-          </a>
+          <a className="btn btn-ghost text-xl font-bold">Book Store</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <a className="border-2 border-green-400 text-green-400 font-bold hover:bg-green-500 hover:text-white">
-                <button>Home</button>
-              </a>
-            </li>
-            <li>
-              <a>Listed Books</a>
-            </li>
-            <li>
-                <a>Pages to Read</a>
-              </li>
-          </ul>
+          <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
           <a className="btn bg-green-400 mr-3 text-white hover:bg-green-600">
