@@ -17,7 +17,9 @@ const ListedBooks = () => {
 
   return (
     <div> 
-        <h1 className="text-5xl font-bold text-center mb-20">Books</h1>
+        <div className="bg-gray-100 p-1 md:p-2 text-center shadow-lg mb-16">
+        <h1 className="text-5xl font-bold mb-20">Books</h1>
+        </div>
         <h1 className="text-center mb-20">
             <button className="btn text-3xl bg-green-400 hover:bg-green-600 text-Black font-bold border-none rounded-lg">
                 Sort By <IoIosArrowDropdown className="ml-1"></IoIosArrowDropdown>
