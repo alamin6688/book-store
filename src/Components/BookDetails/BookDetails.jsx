@@ -1,74 +1,104 @@
-import { useLoaderData, useParams } from "react-router-dom";
-
+import { useEffect, useState } from 'react';
+import { useLoaderData, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BookDetails = () => {
     const books = useLoaderData();
     const { bookId } = useParams();
-    // console.log(bookId,books)
     const selectedBook = books.find(book => book.bookId === parseInt(bookId));
-    // console.log(selectedBook)
+
+    // State for the read list
+    const [readList, setReadList] = useState([]);
+    // State for the wishlist
+    const [wishlist, setWishlist] = useState([]);
+
+    // Load read list and wishlist from local storage on component mount
+    useEffect(() => {
+        const storedReadList = JSON.parse(localStorage.getItem('readList')) || [];
+        const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        setReadList(storedReadList);
+        setWishlist(storedWishlist);
+    }, []);
+
+    const handleReadButtonClick = () => {
+        if (!readList.includes(selectedBook?.bookId)) {
+            setReadList([...readList, selectedBook.bookId]);
+            toast.success("Book added to Read list!");
+            localStorage.setItem('readList', JSON.stringify([...readList, selectedBook.bookId]));
+
+            // Store book details in local storage
+            localStorage.setItem(selectedBook.bookId, JSON.stringify(selectedBook));
+        } else {
+            toast.warning("Book already added to Read list!");
+        }
+    };
+
+    const handleWhitelistButtonClick = () => {
+        if (!wishlist.includes(selectedBook?.bookId)) {
+            if (readList.includes(selectedBook?.bookId)) {
+                toast.error("Book already added to Read list, can't be added to Wishlist!");
+            } else {
+                setWishlist([...wishlist, selectedBook.bookId]);
+                toast.success("Book added to Wishlist!");
+                localStorage.setItem('wishlist', JSON.stringify([...wishlist, selectedBook.bookId]));
+    
+                // Save book details to local storage
+                localStorage.setItem(selectedBook.bookId, JSON.stringify(selectedBook));
+            }
+        } else {
+            toast.warning("Book already added to Wishlist!");
+        }
+    };
+
     return (
-        <div className="my-10 md:flex gap-5 justify-between items-center bg-gray-100 rounded-2xl shadow-xl mb-20">
-
-            <div className="md:w-1/2 md:pl-4">
-                <img className="w-full rounded-xl" src={selectedBook.image} />
-            </div>
-
-            <div className=" md:w-full rounded-xl flex-1 p-4">
-            <h1 className="text-2xl md:text-3xl font-bold">
-            {selectedBook.bookName}
-            </h1>
-            <p className="">
-                By : {selectedBook.author}
-            </p>
-            <p className="text-xl font-bold">
-                {selectedBook.category}
-            </p>
-            <p className="text-xl font-bold">
-                Review: <span></span>
-                <span className="text-xl font-normal">
-                    {selectedBook.review}
-                </span>
-            </p>
-            <div className="flex justify-start items-center gap-2 mr-4">
-                <p className="text-xl font-bold">Tags:</p>
-                <p className="text-green-400">
-                    # {selectedBook.tags[0]}
-                </p>
-                <p className="text-green-400">
-                    # {selectedBook.tags[1]}
-                    </p>
-                <p className="text-green-400">
-                    # {selectedBook.tags[2]}
-                </p>
-            </div>
-            <div className="space-y-0">
-                <div className="flex gap-2 items-center">
-                    <p>Number of Pages:</p>
-                    <p>{selectedBook.totalPages}</p>
-                </div>
-                <div className="flex gap-2 items-center">
-                    <p>Publisher:</p>
-                    <p>{selectedBook.publisher}</p>
-                </div>
-                <div className="flex gap-2 items-center">
-                    <p>Year of Publishing:</p>
-                    <p>{selectedBook.yearOfPublishing}</p>
-                </div>
-                <div className="flex gap-2 items-center">
-                    <p>Rating:</p>
-                    <p>{selectedBook.rating}</p>
-                </div>
-            </div>
-                <div className="flex gap-5">
-                    <button className="btn  btn-primary text-black border bg-transparent border-green-400 px-6 hover:bg-green-400 hover:border-none">
-                        Read
-                    </button>
-                    <button className="btn btn-primary bg-[#50B1C9] border-none text-white hover:bg-blue-500 hover:border-none">
-                        Wishlist
-                    </button>
-                </div>
-            </div>
+        <div className="my-10 flex flex-col md:flex-row gap-5 justify-between">
+            {selectedBook ? (
+                <>
+                    <img className="w-[40%]" src={selectedBook.image} alt={selectedBook.bookName} />
+                    <div className="flex-1 space-y-3">
+                        <h1 className="font-bold text-4xl">{selectedBook.bookName}</h1>
+                        <h1 className="font-bold text-gray-500">By: {selectedBook.author}</h1>
+                        <hr />
+                        <h1 className="font-bold text-gray-500">{selectedBook.category}</h1>
+                        <hr />
+                        <h1><span className="font-bold">Review:</span> {selectedBook.review}</h1>
+                        <h1>
+                            {selectedBook.tags.map((tag, index) => (
+                                <li className="list-none inline mr-5" key={index}>{tag}</li>
+                            ))}
+                        </h1>
+                        <hr />
+                        <div>
+                            <table>
+                                <tr>
+                                    <td className="pr-7">Number of Pages:</td>
+                                    <td className="font-bold">{selectedBook.totalPages}</td>
+                                </tr>
+                                <tr>
+                                    <td className="pr-7">Publisher:</td>
+                                    <td className="font-bold">{selectedBook.publisher}</td>
+                                </tr>
+                                <tr>
+                                    <td className="pr-7">Year of Publishing:</td>
+                                    <td className="font-bold">{selectedBook.yearOfPublishing}</td>
+                                </tr>
+                                <tr>
+                                    <td className="pr-7">Rating:</td>
+                                    <td className="font-bold">{selectedBook.rating}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div className="flex gap-5">
+                            <button onClick={handleReadButtonClick} className="btn btn-primary text-black border bg-transparent border-gray-400 px-6">Read</button>
+                            <button onClick={handleWhitelistButtonClick} className="btn btn-primary bg-[#50B1C9] border-none text-white">Whitelist</button>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <p>Book not found!</p>
+            )}
+            <ToastContainer />
         </div>
     );
 };

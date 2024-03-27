@@ -1,85 +1,70 @@
-import { useEffect, useState } from "react";
-import ListedBook from "../ListedBook/ListedBook";
-import { IoIosArrowDropdown } from "react-icons/io";
-
+import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { FaAngleDown } from "react-icons/fa6";
+import ReadList from "../ReadList/ReadList";
 
 const ListedBooks = () => {
+    const [currentTab, setCurrentTab] = useState(0);
+    const [sortBy, setSortBy] = useState(null); // State to track the selected sorting option
 
-    const [listedBooks, setListedBooks] = useState([]);
+    const switchTabs = (index) => {
+        setCurrentTab(index);
+    };
 
-    useEffect(()=>{
-        fetch('books.json')
-        .then(res => res.json())
-        .then(data => setListedBooks(data));
-    },[]);
+    // Function to handle sorting based on the selected option
+    const handleSortBy = (option) => {
+        setSortBy(option);
+    };
 
-    
+    return (
+        <div className="my-10">
+            <h1 className="text-3xl font-bold mb-4">Listed Books</h1>
 
-  return (
-    <div> 
-        <div className="bg-gray-100 p-1 md:p-2 text-center shadow-lg mb-16">
-        <h1 className="text-5xl font-bold mb-20">Books</h1>
-        </div>
-        <h1 className="text-center mb-20">
-            <button className="btn text-3xl bg-green-400 hover:bg-green-600 text-Black font-bold border-none rounded-lg">
-                Sort By <IoIosArrowDropdown className="ml-1"></IoIosArrowDropdown>
-            </button>
-        </h1>
-
-        {/* <div className="hero w-full bg-gray-300 rounded-3xl shadow-xl mb-20">
-        <div className="hero-content w-full flex-col lg:flex-row">
-          <img
-            src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-            className="max-w-sm rounded-lg shadow-2xl"
-          />
-        <div>
-            <h1 className="text-4xl font-bold">
-            The Catcher in the Rye
-            </h1>
-            <p className="py-4">
-                By : Awlad Hossain
-            </p>
-            <div className="flex justify-start">
-                <h3 className="mr-4">Tag:</h3>
-                <div className="flex justify-center gap-2 mr-4">
-                    <p>#alamin</p>
-                    <p>#saif</p>
-                </div>
-                <div className="flex gap-2 justify-center">
-                    <p>Icon</p>
-                    Year of Publishing: 1924
-                </div>
+            {/* Dropdown */}
+            <div className="flex justify-center my-7">
+                <details className="dropdown">
+                    <summary className="hover:bg-[#23BE0A] border-none outline-none m-1 btn bg-[#23BE0A] text-white">Sort by <FaAngleDown /></summary>
+                    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                        <li><button onClick={() => handleSortBy('rating')}>Rating</button></li>
+                        <li><button onClick={() => handleSortBy('pages')}>Number of pages</button></li>
+                        <li><button onClick={() => handleSortBy('year')}>Published year</button></li>
+                    </ul>
+                </details>
             </div>
-            <div className="flex justify-start gap-2 mt-2">
-            <div className="flex gap-2 justify-center">
-                    <p>Icon</p>
-                    Publisher: Scribner
-                </div>
-                <div className="flex gap-2 justify-center">
-                    <p>Icon</p>
-                    Page 192
-                </div>
-            </div>
-            <div className="flex justify-between mt-6">
-            <button className="btn btn-primary rounded-3xl">Category: </button>
-            <button className="btn btn-primary rounded-3xl">Rating: 4.5</button>
-            <button className="btn btn-primary rounded-3xl">View Details</button>
-            </div>
-        </div>
-        </div>
-        </div> */}
-        <div className="p-4">
-            {
-               listedBooks.map(books => <ListedBook
-                key={books.bookId} 
-                books={books}>
 
-                </ListedBook>) 
-            }
-        </div>
+            <div role="tablist" className="tabs tabs-lifted">
+                <Link
+                    to="read-book"
+                    role="tab"
+                    className={`tab ${currentTab === 0 ? 'tab-active' : ''}`}
+                    onClick={() => switchTabs(0)}
+                >
+                    <h1 className="text-2xl ">Read Books</h1>
+                </Link>
+                <Link
+                    to={`whitelist-books`}
+                    role="tab"
+                    className={`tab ${currentTab === 1 ? 'tab-active' : ''}`}
+                    onClick={() => switchTabs(1)}
+                >
+                    <h1 className="text-2xl ">Wishlist Books</h1>
+                </Link>
+                <a role="tab" className="tab"></a>
+            </div>
 
-    </div>
-  );
+            <div className="tab-content">
+                {currentTab === 0 && (
+                    <ReadList sortBy={sortBy} />
+                )}
+                {currentTab === 1 && (
+                    <div>
+                        Content for Whitelist Books
+                    </div>
+                )}
+            </div>
+            <Outlet />
+        </div>
+    );
 };
 
 export default ListedBooks;

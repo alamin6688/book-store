@@ -1,17 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Root from './Components/Root/Root';
-import Home from './Components/Home/Home';
-import ListedBooks from './Components/ListedBooks/ListedBooks';
-import PagesToRead from './Components/PagesToRead/PagesToRead';
+import './index.css'
 import ErrorPage from './Components/ErrorPage/ErrorPage';
-import { useLoaderData, useParams } from "react-router-dom";
+import Home from './Components/Home/Home';
+import Root from './Components/Root/Root';
+import ListedBooks from './Components/ListedBooks/ListedBooks';
 import BookDetails from './Components/BookDetails/BookDetails';
+import ReadList from './Components/ReadList/ReadList';
+import WhiteList from './Components/WhiteList/WhiteList';
+import PagesToRead from './Components/PagesToRead/PagesToRead';
+
+
 
 const router = createBrowserRouter([
   {
@@ -20,25 +23,38 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home></Home>,
-      },
-      {
-        path: '/listedBooks',
-        element: <ListedBooks></ListedBooks>,
-      },
-      {
-        path: '/pagesToRead',
-        element: <PagesToRead></PagesToRead>,
       },
       {
         path: "/details/:bookId",
         element: <BookDetails></BookDetails>,
-        loader: ()=>fetch('../books.json'),
+        loader: () => fetch('../Books.json'),
       },
-    ]
+      {
+        path: "/to-read",
+        element: <PagesToRead></PagesToRead>,
+      },
+      {
+        path: "/listed",
+        element: <ListedBooks></ListedBooks>,
+        loader: () => fetch('Books.json'),
+        children: [
+          {
+            index:true,
+            path: 'read-book',
+            element: <ReadList></ReadList>,
+          },
+          {
+            path: 'whitelist-books',
+            element: <WhiteList></WhiteList>,
+          },
+        ],
+      },
+    ],
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

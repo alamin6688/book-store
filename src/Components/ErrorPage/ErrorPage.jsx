@@ -1,21 +1,11 @@
 import { Link } from "react-router-dom";
 
-
 const ErrorPage = () => {
     return (
-        <div className="text-center mt-32 space-y-4">
-            <h1 className="text-5xl font-bold">404</h1>
-            <h1>Error 404: Page Not Found</h1>
-            <p>
-                Sorry, the page you are looking for does not exist!!!
-            </p>
-            <p>
-                <Link to="/">
-                    <button className="btn bg-gray-600 text-white font-bold">
-                        Go Back
-                    </button>
-                </Link>
-            </p>
+        <div className="flex flex-col justify-center items-center h-[100vh] space-y-2">
+                <p className="text-5xl font-bold">Oops!!</p>
+                <p>404 - Page not found</p>
+                <Link to='/'><button className="btn btn-primary bg-[#59C6D2] border-none text-white mt-3">Back To Home</button></Link>
         </div>
     );
 };
