@@ -26,7 +26,7 @@ const Book = ({ book }) => {
                         </div>
                         <div className='flex items-center'>
                             <h1 className='text-lg mr-2'>{rating}</h1>
-                            <FaRegStar />
+                            <FaRegStar className='text-orange-400' />
                         </div>
                     </div>
                 </div>
