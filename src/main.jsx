@@ -13,6 +13,9 @@ import BookDetails from './Components/BookDetails/BookDetails';
 import ReadList from './Components/ReadList/ReadList';
 import WhiteList from './Components/WhiteList/WhiteList';
 import PagesToRead from './Components/PagesToRead/PagesToRead';
+import AboutUs from './Components/AboutUs/AboutUs';
+import Contact from './Components/Contact/Contact';
+import Blog from './Components/Blog/Blog';
 
 
 
@@ -34,6 +37,18 @@ const router = createBrowserRouter([
       {
         path: "/to-read",
         element: <PagesToRead></PagesToRead>,
+      },
+      {
+        path: "/about",
+        element: <AboutUs></AboutUs>,
+      },
+      {
+        path: '/contact',
+        element: <Contact></Contact>,
+      },
+      {
+        path: '/blog',
+        element: <Blog></Blog>,
       },
       {
         path: "/listed",

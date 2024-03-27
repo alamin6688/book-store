@@ -1,9 +1,28 @@
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+
+
+// Define the custom shape component
+const CustomShape = (props) => {
+    const { fill, x, y, width, height } = props;
+
+    // Define the custom shape path
+    const getPath = (x, y, width, height) => {
+        return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
+      ${x + width / 2}, ${y}
+      C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${x + width}, ${y + height}
+      Z`;
+    };
+
+    // Render the custom shape
+    return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
+};
 
 const PagesToRead = () => {
     // State to store the list of books from the readList in local storage
     const [bookList, setBookList] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
 
     // Load book list from the readList in local storage on component mount
     useEffect(() => {
@@ -13,35 +32,38 @@ const PagesToRead = () => {
 
         // Set the book list state with the retrieved data
         setBookList(storedBookList);
+
+        // Calculate total pages to read
+        const total = storedBookList.reduce((acc, book) => acc + book.totalPages, 0);
+        setTotalPages(total);
     }, []);
-
-    // Calculate the total pages to read from all books in bookList
-    const totalToRead = bookList.reduce((total, book) => total + book.totalPages, 0);
-
-    // Create data for the bar chart including the total pages to read
-    const chartData = [
-        ...bookList.map((book) => ({
-            bookName: `${book.bookName}`,
-            totalPages: book.totalPages,
-        })),
-        { bookName: `Total to Read`, totalPages: totalToRead }
-    ];
+    const getRandomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 
     return (
-        <div>
-            <h2>Pages to Read</h2>
-            <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="bookName" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="totalPages" fill="#9BB0C1" label={{ position: 'top' }} />
-                </BarChart>
+        <div className='w-[100%] h-[400px] md:h-[500px] lg:h-[600px] flex flex-col items-center my-10'>
+            <p className='text-2xl font-bold text-center my-5'>Total Pages to Read Time: {totalPages} <small>min</small> </p>
+ 
+            <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+                data={bookList}
+                margin={{ top: 20, right: 30, left: 20, bottom: 50 }} // Increase bottom margin for XAxis labels
+            >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="bookName" textAnchor="end" interval={0} height={70} /> {/* Rotate and position XAxis labels */}
+                <YAxis />
+                <Bar dataKey="totalPages" fill={getRandomColor()} shape={<CustomShape />} label={{ position: 'top' }} />
+            </BarChart>
             </ResponsiveContainer>
         </div>
     );
 };
 
+
+CustomShape.propTypes = {
+    fill: PropTypes.string.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired, 
+    height: PropTypes.number.isRequired,
+};
 export default PagesToRead;

@@ -15,8 +15,9 @@ const NavBar = () => {
                     <NavLink className='p-1' to='/'>Home</NavLink>
                     <NavLink className='p-1' to='/listed'>Listed Books</NavLink>
                     <NavLink className='p-1' to='/to-read'>Pages to Read</NavLink>
-                    <NavLink className='p-1' to='/favourites'>Favourites</NavLink>
-                    <NavLink className='p-1' to='/buy'>To Buy</NavLink>
+                    <NavLink className='p-1' to='/about'>About Us</NavLink>
+                    <NavLink className='p-1' to='/contact'>Contact</NavLink>
+                    <NavLink className='p-1' to='/blog'>Blog</NavLink>
                 </nav>
             </div>
             <div className=" flex gap-5">
