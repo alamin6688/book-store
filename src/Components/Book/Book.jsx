@@ -5,8 +5,6 @@ import { FaRegStar } from "react-icons/fa6";
 const Book = ({ book }) => {
     const { bookId, bookName, category,tags, author, rating, image } = book;
 
-
-
     return (
         <div className='w-full p-5 border rounded-2xl'>
             <Link to={`/details/${bookId}`}>
@@ -18,7 +16,6 @@ const Book = ({ book }) => {
                             <button key={index} className='bg-[#F4FCF3] text-[#57CD45] px-3 py-1 rounded-full mr-2'>{tag}</button>
                             )
                         }
-                     
                     </div>
                     <h1 className='text-xl font-bold'>{bookName}</h1>
                     <h1 className='text-lg'>By: {author}</h1>
