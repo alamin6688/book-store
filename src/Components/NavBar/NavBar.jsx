@@ -1,30 +1,46 @@
-import {  NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './NavBar.css';
 
 const NavBar = () => {
 
+
     return (
-        <div className="navbar bg-base-100 flex justify-between">
+        <>
+            <div className="navbar bg-base-100 flex flex-col md:flex-row">
+                <div className="navbar-start flex justify-between md:justify-start 32 w-full md:w-2/3 lg:w-[24%]">
+                    <div className="dropdown ">
+                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-0 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                        </div>
 
-            <div>
-                <a className="font-bold text-2xl md:text-3xl">Book Store</a>
-            </div>
+                        <nav tabIndex={0} className="flex gap-5 menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                            <NavLink className='p-1' to='/'>Home</NavLink>
+                            <NavLink className='p-1' to='/listed'>Listed Books</NavLink>
+                            <NavLink className='p-1' to='/to-read'>Pages to Read</NavLink>
+                            <NavLink className='p-1' to='/about'>About Us</NavLink>
+                            <NavLink className='p-1' to='/contact'>Contact</NavLink>
+                            <NavLink className='p-1' to='/blog'>Blog</NavLink>
+                        </nav>
 
-            <div className=" hidden md:flex">
-                <nav className="flex gap-5">
-                    <NavLink className='p-1' to='/'>Home</NavLink>
-                    <NavLink className='p-1' to='/listed'>Listed Books</NavLink>
-                    <NavLink className='p-1' to='/to-read'>Pages to Read</NavLink>
-                    <NavLink className='p-1' to='/about'>About Us</NavLink>
-                    <NavLink className='p-1' to='/contact'>Contact</NavLink>
-                    <NavLink className='p-1' to='/blog'>Blog</NavLink>
-                </nav>
+                    </div>
+                    <a className="font-bold text-2xl md:text-3xl">Book Store</a>
+                </div>
+                <div className="navbar-center hidden lg:flex justify-center lg:w-[61%]  ">
+                    <nav className="flex gap-5">
+                        <NavLink className='p-1' to='/'>Home</NavLink>
+                        <NavLink className='p-1' to='/listed'>Listed Books</NavLink>
+                        <NavLink className='p-1' to='/to-read'>Pages to Read</NavLink>
+                        <NavLink className='p-1' to='/about'>About Us</NavLink>
+                        <NavLink className='p-1' to='/contact'>Contact</NavLink>
+                        <NavLink className='p-1' to='/blog'>Blog</NavLink>
+                    </nav>
+                </div>
+                <div className="navbar-end md:flex gap-3 justify-center md:justify-end  lg:w-[25%] hidden">
+                    <a className="border-none text-white btn bg-green-400 hover:bg-green-600">Sign In</a>
+                    <a className="btn bg-blue-400 hover:bg-blue-500 text-white">Sign Up</a>
+                </div>
             </div>
-            <div className=" flex gap-5">
-                <a className="btn bg-green-400 hover:bg-green-600 text-white">Sign In</a>
-                <a className="btn bg-blue-400 hover:bg-blue-600 text-white">Sign Up</a>
-            </div>
-        </div>
+        </>
     );
 };
 
