@@ -5,7 +5,7 @@ const Banner = () => {
         <div className='flex justify-around items-center bg-gray-100 h-[400px] rounded-xl my-5 shadow-xl'>
             <div className="space-y-5">
                 <h1 className="text-4xl font-bold">
-                    Dive into Our Online <br />Bookstore Today!
+                    Dive into Our Online <br />Book Store Today!
                 </h1>
                     <div className="mt-5">
                     <Link to='/listed'> 
